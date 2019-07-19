@@ -1,0 +1,4 @@
+1. 在Unity中使用SQLite数据库需要先导入三个dll文件, mono.data.sqlite.dll、System.data.dll、sqlite3.dll, 到Assets/Plugins文件夹中。
+2. mono.data.sqlite.dll和System.data.dll在Unity的安装目录下Unity\Editor\Data\MonoBleedingEdge\lib\mono\2.0可以找到。
+3. sqlite3.dll需要到:https://www.sqlite.org/download.html网站上下载。
+window电脑下载: Precompiled Binaries for Windows(一定要注意32位和64位)。
