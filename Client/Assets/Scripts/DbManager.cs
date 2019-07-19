@@ -14,7 +14,7 @@ using Mono.Data.Sqlite;
 public class DbPath
 {
     // 数据库存放在Assets/StreamingAssets/MyDatabase.db
-    private static string MyDatabaseFileName = "MyDatabase1.db";
+    private static string MyDatabaseFileName = "MyDatabase.db";
 
     private static string myDatabaseFilePath = string.Empty;
     public static string MyDatabaseFilePath
