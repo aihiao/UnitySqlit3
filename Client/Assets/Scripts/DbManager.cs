@@ -36,6 +36,7 @@ public class User
     public int Age { get; set; }
     public string Name { get; set; }
     public float Height { get; set; }
+    public bool IsMale { get; set; }
 }
 
 public class DbManager : MonoBehaviour
@@ -200,6 +201,7 @@ public class DbManager : MonoBehaviour
             user.Age = 20 + i;
             user.Name = "zhangsan";
             user.Height = 178.5f + i;
+            user.IsMale = i % 2 == 0;
 
             Insert<User>(user);
         }
@@ -224,7 +226,7 @@ public class DbManager : MonoBehaviour
         List<User> list = GetAllData<User>();
         foreach (var user in list)
         {
-            Debug.Log(string.Format("Id = {0} Name = {1} Age = {2} Height = {3}", user.Id, user.Name, user.Age, user.Height));
+            Debug.Log(string.Format("Id = {0} Name = {1} Age = {2} Height = {3} IsMale = {4}", user.Id, user.Name, user.Age, user.Height, user.IsMale));
         }
     }
 
@@ -240,8 +242,9 @@ public class DbManager : MonoBehaviour
             T t = new T();
             for (int i = 0; i < reader.FieldCount; i++)
             {
-                // reader.GetValue(i)返回object类型不能通过反射进行赋值, 为什么不能???????
-                // 因此这里进行了一次转换
+                // reader.GetValue(i)返回object类型不能通过反射进行赋值, 为什么???????
+                // 因此这里进行了一次转换, 事实上好像只有float需要强转。
+                // bool类型就更奇怪了, 插入数据库数据有True和False, 读取数据的时候只有False, 为什么???????
                 type.GetProperty(reader.GetName(i)).SetValue(t, Db2CSValue(type.GetProperty(reader.GetName(i)).PropertyType, reader.GetValue(i)), null);
             }
             list.Add(t);
@@ -252,7 +255,7 @@ public class DbManager : MonoBehaviour
 
     private object Db2CSValue(Type type, object value)
     {
-        object result = null;
+        object result = value;
         if (type == typeof(int))
         {
             result = Convert.ToInt32(value);
@@ -281,6 +284,7 @@ public class DbManager : MonoBehaviour
         user.Age = 16;
         user.Name = "xiaohua";
         user.Height = 168.2f;
+        user.IsMale = false;
 
         UpdateData<User>(user);
     }
